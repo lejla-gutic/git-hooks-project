@@ -1,0 +1,5 @@
+```txt
+flake8
+pylint
+coverage
+```
