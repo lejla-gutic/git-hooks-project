@@ -1,0 +1,40 @@
+#!/bin/bash
+
+echo "Running pre-commit checks..."
+
+echo "Running flake8..."
+python3 -m flake8 src/
+if [ $? -ne 0 ]; then
+    echo "flake8 failed."
+    exit 1
+fi
+
+echo "Running pylint..."
+python3 -m pylint src/calculator.py
+if [ $? -ne 0 ]; then
+    echo "pylint failed."
+    exit 1
+fi
+
+echo "Running unit tests..."
+python3 -m unittest discover tests
+if [ $? -ne 0 ]; then
+    echo "Tests failed."
+    exit 1
+fi
+
+echo "Running coverage..."
+python3 -m coverage run -m unittest discover tests
+if [ $? -ne 0 ]; then
+    echo "Coverage run failed."
+    exit 1
+fi
+
+python3 -m coverage report
+if [ $? -ne 0 ]; then
+    echo "Coverage report failed."
+    exit 1
+fi
+
+echo "All checks passed."
+exit 0

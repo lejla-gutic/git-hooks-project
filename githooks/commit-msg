@@ -1,0 +1,34 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(head -n 1 "$COMMIT_MSG_FILE")
+
+# Pravilo:
+# Format commit-a:
+# type: description
+# Primeri:
+# feat: add factorial function
+# fix: handle division by zero
+# docs: update README
+# Izbrala sem stil "Conventional Commits", ker naredi zgodovino bolj pregledno in takoj vidimo kakšna sprememba je bila narejena.
+# To pravilo sem našla na strani https://www.conventionalcommits.org/
+# Prav tako Git dokumentacija priporoča kratke in jasne commit poruke, zato sem dodala še omejitev dolžine (max 72 znakov).
+
+PATTERN="^(feat|fix|docs|test|refactor|chore): .+"
+
+if ! echo "$COMMIT_MSG" | grep -Eq "$PATTERN"; then
+    echo "ERROR: Invalid commit message format."
+    echo "Use format: type: description"
+    echo "Example: feat: add calculator power function"
+    echo "Allowed types: feat, fix, docs, test, refactor, chore"
+    exit 1
+fi
+
+MAX_LENGTH=72
+if [ ${#COMMIT_MSG} -gt $MAX_LENGTH ]; then
+    echo "ERROR: Commit message is too long."
+    echo "Keep the first line under $MAX_LENGTH characters."
+    exit 1
+fi
+
+exit 0

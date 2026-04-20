@@ -1,4 +1,7 @@
+"""Simple calculator with basic math operations."""
+
 import math
+
 
 def add(a, b):
     """Return the sum of two numbers."""
