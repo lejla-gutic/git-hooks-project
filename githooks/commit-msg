@@ -3,7 +3,6 @@
 COMMIT_MSG_FILE="$1"
 COMMIT_MSG=$(head -n 1 "$COMMIT_MSG_FILE")
 
-# Pravilo:
 # Format commit-a:
 # type: description
 # Primeri:
